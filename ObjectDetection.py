@@ -9,9 +9,9 @@ def nothing():
 vs = cv2.VideoCapture("batsman_facing_video.mp4")
 
 cv2.namedWindow("Trackbar")
-cv2.createTrackbar("L-H", "Trackbar", 14, 180, nothing)
-cv2.createTrackbar("L-S", "Trackbar", 91, 255, nothing)
-cv2.createTrackbar("L-V", "Trackbar", 124, 255, nothing)
+cv2.createTrackbar("L-H", "Trackbar", 10, 180, nothing)
+cv2.createTrackbar("L-S", "Trackbar", 95, 255, nothing)
+cv2.createTrackbar("L-V", "Trackbar", 125, 255, nothing)
 cv2.createTrackbar("U-H", "Trackbar", 180, 180, nothing)
 cv2.createTrackbar("U-S", "Trackbar", 255, 255, nothing)
 cv2.createTrackbar("U-V", "Trackbar", 255, 255, nothing)
@@ -29,7 +29,8 @@ def save_this_frame_as_image(current_frame, operation_status):
     if operation_status:
         global iterator
         cv2.imwrite('SavedFrames/frame' + str(iterator) + '.jpg', current_frame)
-
+        iterator += 1
+        """ 
         current_image = cv2.imread('SavedFrames/frame' + str(iterator) + '.jpg')
         current_image = cv2.resize(current_image, (340, 480))
         for x in range(0, 340, 1):
@@ -38,12 +39,9 @@ def save_this_frame_as_image(current_frame, operation_status):
                 print(color)
 
         # extracted_color = int(current_image[300, 300])
-        # print(extracted_color)
-
-        iterator += 1
-
+        # print(extracted_color) 
         # if image type is b g r, then b g r value will be displayed.
-        # if image is gray then color intensity will be displayed.
+        # if image is gray then color intensity will be displayed. """
 
 
 while True:
@@ -53,7 +51,7 @@ while True:
     if frame is None:
         break
 
-    save_this_frame_as_image(frame, True)
+    save_this_frame_as_image(frame, False)
 
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
@@ -75,8 +73,12 @@ while True:
     contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
     for cnt in contours:
+        area = cv2.contourArea(cnt)
+        approx = cv2.approxPolyDP(cnt, 0.01 * cv2.arcLength(cnt, True), True)
         modifiedCnt = np.array(cnt).reshape((-1, 1, 2)).astype(np.int32)
-        cv2.drawContours(frame, [modifiedCnt], 0, (255, 0, 0), 2)
+
+        if 10 < area < 50:
+            cv2.drawContours(frame, [approx], 0, (255, 0, 0), 2)
 
     cv2.imshow("Frame", frame)
     cv2.imshow("Mask", mask)
