@@ -9,3 +9,7 @@ How to : <br>
 4 - Draw a contour around the identified color & size <br>
 5 - Check where these 2 objects are colliding <br>
 6 - Save that frame as image <br>
+<br>
+Factors affecting detection of object:<br>
+- multiple objects of same color present in the video [same area size is another problem]<br>
+- no proper lighting to detect the object. [Need to update HSV values real-time for this]<br>
