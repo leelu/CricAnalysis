@@ -3,6 +3,7 @@ import numpy as np
 import cv2
 import imutils
 import time
+import matplotlib.pyplot as plt
 
 # Take in the video
 vs = cv2.VideoCapture('batsman_facing_video.mp4')
@@ -11,11 +12,9 @@ vs = cv2.VideoCapture('batsman_facing_video.mp4')
 lower_yellow = (14, 91, 125)
 upper_yellow = (180, 255, 255)
 
-# initialize the list of tracked points, the frame counter, and the coordinate deltas
+# initialize the list of tracked points, the frame counter
 pts = deque(maxlen=32)
 counter = 0
-(dX, dY) = (0, 0)
-direction = ""
 
 # allow the camera or video file to warm up
 time.sleep(2.0)

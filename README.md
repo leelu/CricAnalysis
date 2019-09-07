@@ -13,3 +13,4 @@ How to : <br>
 Factors affecting detection of object:<br>
 - multiple objects of same color present in the video [same area size is another problem]<br>
 - no proper lighting to detect the object. [Need to update HSV values real-time for this]<br>
+- distance tracked can be 3ft. [Assumption based on certain findings]
